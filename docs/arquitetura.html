@@ -1,0 +1,437 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Documentação HM Bank IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14161C; --ink-soft:#454955; --ink-faint:#868C99;
+  --line:#DDE0E6; --line-soft:#EBEDF1;
+  --bg:#FFFFFF; --code-bg:#F5F6F8;
+  --accent:#1447C7; --accent-soft:#EEF2FC;
+  --ok:#166534; --ok-soft:#EDF7F0;
+  --serif-none: ;
+  color-scheme:light;
+}
+/* This document intentionally commits to a single plain, print-like light
+   theme (white background, ink-black text) as requested — a technical
+   report, not a themed app. */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding-block: max(40px, env(safe-area-inset-top,0px)) 60px;
+}
+h1,h2,h3,h4{font-family:'Inter',system-ui,sans-serif; font-weight:700; color:var(--ink); letter-spacing:-.01em; text-wrap:balance; margin:0;}
+p{line-height:1.68; color:var(--ink-soft); margin:0; font-size:15px;}
+a{color:var(--accent); text-decoration-color:rgba(20,71,199,.35); text-underline-offset:2px;}
+a:hover{text-decoration-color:var(--accent);}
+img,svg{max-width:100%;}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+
+.doc{max-width:740px; margin:0 auto; padding-inline:22px;}
+
+/* ---- header / meta ---- */
+.doc-kicker{font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px;}
+.doc-title{font-size:32px; line-height:1.18;}
+.doc-meta{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:16px; font-size:12.5px; color:var(--ink-faint);}
+.doc-meta b{color:var(--ink-soft); font-weight:600;}
+.doc-abstract{font-size:15px; color:var(--ink-soft); margin-top:22px; padding:16px 18px; background:var(--code-bg); border-left:3px solid var(--ink); border-radius:0 4px 4px 0;}
+hr{border:none; border-top:1px solid var(--line); margin:34px 0;}
+
+.stack-line{display:flex; flex-wrap:wrap; gap:7px 10px; margin-top:18px; font-size:12px;}
+.stack-line span{font-family:'IBM Plex Mono',monospace; padding:2px 0; color:var(--ink-soft); border-bottom:1px dotted var(--line);}
+.stack-line span::after{content:"·"; margin-left:10px; color:var(--line);}
+.stack-line span:last-child::after{content:"";}
+
+/* ---- toc ---- */
+.toc-box{margin-top:30px; border:1px solid var(--line); border-radius:6px; padding:18px 20px;}
+.toc-box b{display:block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px;}
+.toc-box ol{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:5px;}
+.toc-box li{font-size:13.5px; color:var(--ink-soft);}
+.toc-box a{color:var(--ink); font-weight:600; text-decoration:none;}
+.toc-box a:hover{color:var(--accent);}
+.toc-box .toc-sub{font-weight:400; color:var(--ink-faint);}
+
+/* ---- sections ---- */
+.sec{padding-top:44px; scroll-margin-top:24px;}
+.sec-num{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint); margin-bottom:6px;}
+.sec h2{font-size:22px; margin-bottom:14px;}
+.sec h3{font-size:15.5px; margin:26px 0 8px; padding-top:2px;}
+.sec > p{margin-bottom:14px; max-width:640px;}
+.sec > p:last-child{margin-bottom:0;}
+
+.note{display:flex; gap:11px; padding:14px 16px; border:1px solid var(--line); border-radius:6px; margin:20px 0; background:var(--code-bg);}
+.note svg{flex-shrink:0; margin-top:2px; color:var(--ink-faint);}
+.note p{font-size:13px; color:var(--ink-soft);}
+.note b{color:var(--ink);}
+
+ul.plain, ol.plain{margin:14px 0; padding-left:20px; display:flex; flex-direction:column; gap:8px;}
+ul.plain li, ol.plain li{font-size:14px; color:var(--ink-soft); line-height:1.6;}
+ul.plain b, ol.plain b{color:var(--ink);}
+ul.plain{list-style:none; padding-left:0;}
+ul.plain li{padding-left:20px; position:relative;}
+ul.plain li::before{content:"—"; position:absolute; left:0; color:var(--ink-faint);}
+
+.tree{font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.85; background:var(--code-bg); border:1px solid var(--line); border-radius:6px; padding:16px 18px; color:var(--ink-soft); overflow-x:auto; margin:18px 0;}
+.tree .d1{color:var(--ink); font-weight:600;}
+.tree .d2{padding-left:20px;}
+.tree .d3{padding-left:40px; color:var(--ink-faint);}
+.tree .tag{color:var(--accent);}
+
+table{width:100%; border-collapse:collapse; margin:20px 0; font-size:13.5px;}
+th{text-align:left; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); padding:8px 10px; border-bottom:1px solid var(--ink);}
+td{padding:11px 10px; border-bottom:1px solid var(--line); color:var(--ink-soft); vertical-align:top;}
+td:first-child{color:var(--ink); font-weight:600; width:34%;}
+tr:last-child td{border-bottom:none;}
+
+.tag{display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; padding:1.5px 7px; border:1px solid var(--line); border-radius:3px; color:var(--ink-soft); margin-right:5px;}
+.tag.core{border-color:var(--ok); color:var(--ok); background:var(--ok-soft);}
+.tag.diff{border-color:var(--accent); color:var(--accent); background:var(--accent-soft);}
+
+figure{margin:22px 0 6px;}
+figure.diagram{border:1px solid var(--line); border-radius:6px; padding:18px 16px 12px;}
+figure.diagram svg{width:100%; height:auto; color:var(--ink-soft);}
+figure.diagram .accent{color:var(--accent);}
+figcaption{font-size:12.5px; color:var(--ink-faint); margin-top:12px; line-height:1.6;}
+figcaption b{color:var(--ink-soft);}
+
+.mock-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0;}
+@media (max-width:640px){.mock-grid{grid-template-columns:1fr;}}
+.mock-card{border:1px solid var(--line); border-radius:6px; padding:14px;}
+.mock-card svg{width:100%; height:auto; background:var(--code-bg); border-radius:4px; color:var(--ink-faint);}
+.mock-num{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint);}
+.mock-card h4{font-size:13.5px; font-weight:700; margin:9px 0 4px;}
+.mock-card p{font-size:12.5px;}
+
+.foot{padding-top:44px; margin-top:44px; border-top:1px solid var(--line);}
+.foot p{font-size:12px;}
+
+@media (max-width:640px){
+  .doc-title{font-size:26px;}
+  .mono-hide{display:none;}
+}
+</style>
+
+<article class="doc">
+
+  <div class="doc-kicker">Documentação técnica · protótipo de portfólio</div>
+  <h1 class="doc-title">Plataforma de IA — HM Bank</h1>
+  <p style="font-size:15px; color:var(--ink-soft); margin-top:10px; max-width:620px;">Arquitetura de front-end, solução em nuvem simulada e decisões de produto por trás do protótipo, mapeadas requisito a requisito com a vaga de Engenharia de Software Full Stack — Plataforma de IA.</p>
+  <div class="doc-meta">
+    <span><b>Autora</b> Hágata Mendes</span>
+    <span><b>Tipo</b> Protótipo front-end, fictício</span>
+    <span><b>Status</b> Concluído</span>
+    <span><b>Última revisão</b> set. 2026</span>
+  </div>
+
+  <div class="doc-abstract">
+    <b>Resumo.</b> Este documento explica o raciocínio de arquitetura por trás de um protótipo de interface para uma plataforma corporativa de IA multi-agente: o que foi construído de fato em React/TypeScript, o que foi desenhado (mas não implementado) como arquitetura de nuvem e dados, e como cada decisão responde a um requisito específico da vaga.
+  </div>
+
+  <div class="stack-line">
+    <span>React 18</span><span>TypeScript</span><span>Python · FastAPI</span><span>AWS Lambda</span><span>API Gateway</span>
+    <span>DynamoDB</span><span>RDS PostgreSQL</span><span>SQS</span><span>EKS</span><span>CloudFormation</span>
+    <span>RAG · Vector DB</span><span>Multi-agente</span><span>DDD</span><span>Data Mesh</span>
+  </div>
+
+  <div class="toc-box">
+    <b>Sumário</b>
+    <ol>
+      <li><a href="#contexto">Contexto &amp; objetivo</a></li>
+      <li><a href="#frontend">Arquitetura de front-end</a></li>
+      <li><a href="#backend">Solução em nuvem <span class="toc-sub">(simulada)</span></a></li>
+      <li><a href="#agentes">Sistema multi-agente &amp; RAG</a></li>
+      <li><a href="#dados">Dados: relacional, não-relacional e em malha</a></li>
+      <li><a href="#telas">Decisões tela a tela</a></li>
+      <li><a href="#mapeamento">Mapeamento com os requisitos da vaga</a></li>
+    </ol>
+  </div>
+
+  <hr/>
+
+  <section class="sec" id="contexto">
+    <div class="sec-num">01</div>
+    <h2>Contexto &amp; objetivo</h2>
+    <p>A vaga pede alguém que transite entre front-end (React/TypeScript), backend (Python, FastAPI, SQL) e infraestrutura AWS serverless, com diferenciais em RAG, sistemas multi-agente, DDD e Data Mesh. Em vez de listar isso num currículo, decidi construir a interface de uma plataforma de IA corporativa que já nasce pensando nessa arquitetura — mesmo que, por limitação de ambiente, o backend e a nuvem sejam simulados no front-end.</p>
+
+    <div class="note">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      <p><b>Nota de escopo.</b> "HM Bank" é uma marca fictícia; todos os dados, métricas e respostas dos agentes são simulados no navegador — sem backend real, sem LLM real, sem dado de nenhuma empresa. O objetivo é demonstrar raciocínio de produto, arquitetura e front-end, não uma integração real.</p>
+    </div>
+
+    <h3>O que a interface precisava provar</h3>
+    <ul class="plain">
+      <li><b>Raciocínio de sistema, não de tela solta</b> — a UI reflete uma arquitetura de múltiplos agentes especializados coordenados por um orquestrador, do jeito que a vaga descreve.</li>
+      <li><b>Domínio do front-end pedido</b> — React + TypeScript, tema por tokens, estado centralizado, sem framework de UI pronto.</li>
+      <li><b>Consciência da nuvem por trás</b> — cada tela tem uma contraparte de infraestrutura AWS pensada e documentada aqui, mesmo que simulada.</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="frontend">
+    <div class="sec-num">02</div>
+    <h2>Arquitetura de front-end</h2>
+    <p>SPA em React 18 + TypeScript, com sistema de temas por tokens CSS (claro/escuro) e todo o estado centralizado num único componente <span class="mono">&lt;App/&gt;</span>, que repassa dados para componentes de apresentação — o mesmo padrão que eu usaria num projeto real antes de introduzir uma lib de state management.</p>
+
+    <h3>Árvore de componentes (simplificada)</h3>
+    <div class="tree">
+      <div class="d1">&lt;App&gt; <span class="tag">// estado global: view, activeId, threads, tema…</span></div>
+      <div class="d2">├─ &lt;Sidebar&gt;</div>
+      <div class="d3">│&nbsp;&nbsp;├─ &lt;IconRail&gt; <span class="tag">Mensagens · IA · Agenda</span></div>
+      <div class="d3">│&nbsp;&nbsp;└─ &lt;SidebarPanel&gt; <span class="tag">lista conforme a aba do rail</span></div>
+      <div class="d2">├─ &lt;Topbar&gt; <span class="tag">breadcrumb, ambiente, tema, usuário</span></div>
+      <div class="d2">├─ &lt;ChatThread&gt;</div>
+      <div class="d3">│&nbsp;&nbsp;└─ &lt;MessageBubble&gt; <span class="tag">texto, SQL, NoSQL, ML, upload</span></div>
+      <div class="d2">└─ &lt;GovernancePanels&gt; <span class="tag">Dashboard, Guardrails, Acesso, Nuvem</span></div>
+    </div>
+
+    <h3>Decisões e por quê</h3>
+    <table>
+      <tr><th>Decisão</th><th>Motivação</th></tr>
+      <tr><td>Design tokens em CSS</td><td>Paleta e espaçamento como variáveis, redefinidas em três camadas — <span class="mono">:root</span>, <span class="mono">prefers-color-scheme</span> e <span class="mono">[data-theme]</span> — cobrindo tema do sistema e escolha manual sem duplicar componentes.</td></tr>
+      <tr><td>Componentes pequenos e compostos</td><td><span class="mono">NavItem</span>, <span class="mono">AgentAvatar</span>, <span class="mono">MessageBubble</span> combinados em telas maiores — a mesma lógica que eu aplicaria com uma lib de componentes real.</td></tr>
+      <tr><td>Estado como "backend simulado"</td><td>Respostas, latência e eventos de auditoria vivem em <span class="mono">useState</span>/<span class="mono">useEffect</span>, desenhados para virar chamadas de API (<span class="mono">fetch</span>/React Query) sem reescrever a UI.</td></tr>
+    </table>
+
+    <h3>Próximo passo natural: micro-frontends</h3>
+    <p>Hoje cada painel (chat, dashboard, governança) é um componente no mesmo bundle. Como a vaga cita <b style="color:var(--ink)">Webpack Module Federation</b> como diferencial, o passo seguinte seria expor "Central de Inteligência", "Governança" e "Mensagens" como micro-frontends independentes, cada um com deploy próprio, compartilhando apenas o design system e a casca de navegação.</p>
+  </section>
+
+  <section class="sec" id="backend">
+    <div class="sec-num">03</div>
+    <h2>Solução em nuvem <span style="font-weight:400; color:var(--ink-faint); font-size:16px;">(simulada)</span></h2>
+    <p>Nenhuma dessas peças está no ar — mas cada tela da interface foi desenhada como se estivesse conversando com esta arquitetura. É o desenho que eu levaria para uma reunião de arquitetura antes de escrever a primeira linha de backend.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 960 380" role="img" aria-label="Diagrama: requisição síncrona do usuário passa pelo API Gateway até um Lambda orquestrador, que roteia para RAG, SQL ou ML conforme a intenção; em paralelo, um pipeline assíncrono indexa documentos via S3, SQS e OpenSearch.">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <g font-family="IBM Plex Mono, monospace" font-size="11.5">
+          <rect x="20" y="20" width="150" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="95" y="43" text-anchor="middle" fill="currentColor">SPA React</text>
+          <text x="95" y="58" text-anchor="middle" fill="currentColor">+ TypeScript</text>
+
+          <rect x="210" y="20" width="130" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="275" y="43" text-anchor="middle" fill="currentColor">Amazon API</text>
+          <text x="275" y="58" text-anchor="middle" fill="currentColor">Gateway</text>
+
+          <rect x="380" y="20" width="170" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="2" class="accent"/>
+          <text x="465" y="43" text-anchor="middle" fill="currentColor" class="accent" font-weight="700">Lambda</text>
+          <text x="465" y="58" text-anchor="middle" fill="currentColor" class="accent">Orquestrador · "Beto"</text>
+
+          <rect x="600" y="20" width="160" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="680" y="43" text-anchor="middle" fill="currentColor">DynamoDB</text>
+          <text x="680" y="58" text-anchor="middle" fill="currentColor">sessões &amp; contexto</text>
+        </g>
+
+        <g stroke="currentColor" stroke-width="1.3" fill="none">
+          <line x1="170" y1="47" x2="205" y2="47" marker-end="url(#arrow)"/>
+          <line x1="340" y1="47" x2="375" y2="47" marker-end="url(#arrow)"/>
+          <line x1="550" y1="47" x2="595" y2="47" marker-end="url(#arrow)"/>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="currentColor" opacity=".75">
+          <text x="187" y="38" text-anchor="middle">HTTPS/JSON</text>
+          <text x="357" y="38" text-anchor="middle">invoke</text>
+          <text x="572" y="38" text-anchor="middle">contexto</text>
+        </g>
+
+        <g stroke="currentColor" stroke-width="1.2" fill="none" opacity=".8">
+          <line x1="465" y1="75" x2="195" y2="158" marker-end="url(#arrow)"/>
+          <line x1="465" y1="75" x2="435" y2="158" marker-end="url(#arrow)"/>
+          <line x1="465" y1="75" x2="675" y2="158" marker-end="url(#arrow)"/>
+        </g>
+        <text x="465" y="102" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="currentColor" opacity=".75">roteamento por intenção</text>
+
+        <g font-family="IBM Plex Mono, monospace" font-size="11">
+          <rect x="90" y="160" width="210" height="58" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="195" y="184" text-anchor="middle" fill="currentColor">Bedrock (LLM) +</text>
+          <text x="195" y="199" text-anchor="middle" fill="currentColor">OpenSearch — RAG</text>
+
+          <rect x="340" y="160" width="190" height="58" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="435" y="184" text-anchor="middle" fill="currentColor">Amazon RDS</text>
+          <text x="435" y="199" text-anchor="middle" fill="currentColor">PostgreSQL — SQL</text>
+
+          <rect x="570" y="160" width="210" height="58" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="675" y="184" text-anchor="middle" fill="currentColor">Amazon EKS</text>
+          <text x="675" y="199" text-anchor="middle" fill="currentColor">ML clássico — risco</text>
+        </g>
+
+        <line x1="20" y1="255" x2="940" y2="255" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>
+        <text x="20" y="278" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor" opacity=".75">fluxo assíncrono — indexação de documentos</text>
+
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5">
+          <rect x="20" y="300" width="150" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3"/>
+          <text x="95" y="322" text-anchor="middle" fill="currentColor">Upload de</text>
+          <text x="95" y="337" text-anchor="middle" fill="currentColor">documento</text>
+
+          <rect x="210" y="300" width="120" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3"/>
+          <text x="270" y="332" text-anchor="middle" fill="currentColor">Amazon S3</text>
+
+          <rect x="370" y="300" width="120" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3"/>
+          <text x="430" y="332" text-anchor="middle" fill="currentColor">Amazon SQS</text>
+
+          <rect x="530" y="300" width="170" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3"/>
+          <text x="615" y="322" text-anchor="middle" fill="currentColor">Lambda de</text>
+          <text x="615" y="337" text-anchor="middle" fill="currentColor">indexação</text>
+
+          <rect x="740" y="300" width="190" height="55" rx="6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3"/>
+          <text x="835" y="322" text-anchor="middle" fill="currentColor">OpenSearch</text>
+          <text x="835" y="337" text-anchor="middle" fill="currentColor">índice vetorial</text>
+        </g>
+        <g stroke="currentColor" stroke-width="1.1" fill="none" opacity=".8">
+          <line x1="170" y1="327" x2="205" y2="327" marker-end="url(#arrow)"/>
+          <line x1="330" y1="327" x2="365" y2="327" marker-end="url(#arrow)"/>
+          <line x1="490" y1="327" x2="525" y2="327" marker-end="url(#arrow)"/>
+          <line x1="700" y1="327" x2="735" y2="327" marker-end="url(#arrow)"/>
+        </g>
+      </svg>
+      <figcaption>A requisição passa pelo <b>API Gateway</b> até um <b>Lambda orquestrador</b> (o "Beto"), que classifica a intenção e roteia para o especialista certo — RAG jurídico/políticas via Bedrock + OpenSearch, consultas via RDS PostgreSQL, ou scoring de risco em modelos clássicos no EKS. O contexto de sessão fica no DynamoDB. Em paralelo, documentos enviados percorrem um pipeline assíncrono (S3 → SQS → Lambda de indexação → OpenSearch) que alimenta a mesma base vetorial consultada pelo fluxo RAG. Toda a infraestrutura seria provisionada via <b>AWS CloudFormation</b>.</figcaption>
+    </figure>
+  </section>
+
+  <section class="sec" id="agentes">
+    <div class="sec-num">04</div>
+    <h2>Sistema multi-agente &amp; RAG</h2>
+    <p>Em vez de um chatbot único, a plataforma tem um orquestrador (Beto) e nove agentes especialistas — cada um dono de um domínio de negócio, no espírito de <b style="color:var(--ink)">Domain-Driven Design</b>: o agente Jurídico não enxerga dado de RH, o Financeiro não enxerga dado de Risco.</p>
+    <table>
+      <tr><th>Mecanismo</th><th>Como funciona</th></tr>
+      <tr><td>Classificação de intenção</td><td>O texto do usuário passa por um classificador leve (hoje por palavras-chave; no mundo real, um modelo de intenção) que decide se a pergunta fica com o orquestrador ou vai para um especialista.</td></tr>
+      <tr><td>RAG com fonte citada</td><td>Toda resposta baseada em documento mostra a fonte e um score de confiança — pensado para o requisito de rastreabilidade que um banco exige de qualquer resposta gerada por IA.</td></tr>
+      <tr><td>Guardrails por agente</td><td>Um painel de auditoria mostra, por agente, o que foi bloqueado ou mascarado — a camada de governança que costuma faltar em demos de IA generativa.</td></tr>
+    </table>
+  </section>
+
+  <section class="sec" id="dados">
+    <div class="sec-num">05</div>
+    <h2>Dados: relacional, não-relacional e em malha</h2>
+    <p>A vaga pede trânsito entre bancos relacionais e não-relacionais, além de Data Warehouse/Lakehouse/Data Mesh como diferencial. Simulei os três na própria conversa:</p>
+    <table>
+      <tr><th>Camada</th><th>Como aparece na interface</th></tr>
+      <tr><td>SQL (RDS PostgreSQL)</td><td>O agente Analista de Dados devolve a query gerada, uma tabela de resultado e o tempo de execução — como um Text-to-SQL real faria.</td></tr>
+      <tr><td>NoSQL (DynamoDB)</td><td>Consultas de sessão e perfil respondem no formato chave-valor, com o item bruto exibido — deixando claro quando a modelagem é de documento, não relacional.</td></tr>
+      <tr><td>Data Mesh / Lakehouse</td><td>Cada agente de negócio é dono da sua própria fonte de dados (contratos, políticas de crédito, CRM); o Analista de Dados consulta o lakehouse central, não os dados de domínio de outro time.</td></tr>
+    </table>
+  </section>
+
+  <section class="sec" id="telas">
+    <div class="sec-num">06</div>
+    <h2>Decisões tela a tela</h2>
+    <p>Os quatro esquemas abaixo são wireframes — não screenshots — feitos para explicar o raciocínio por trás de cada tela sem depender de capturas reais.</p>
+
+    <div class="mock-grid">
+      <div class="mock-card">
+        <span class="mock-num">01</span>
+        <svg viewBox="0 0 380 220" role="img" aria-label="Wireframe do chat multi-agente: coluna de agentes à esquerda e conversa com bolhas de resposta à direita">
+          <rect x="4" y="4" width="372" height="212" rx="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <rect x="14" y="14" width="90" height="192" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="22" y="24" width="74" height="14" rx="2" fill="currentColor" opacity=".2"/>
+          <rect x="22" y="46" width="74" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="22" y="72" width="74" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="22" y="98" width="74" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="116" y="14" width="250" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="132" cy="29" r="8" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="150" y="24" width="90" height="10" rx="2" fill="currentColor" opacity=".18"/>
+          <rect x="116" y="54" width="170" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="200" y="98" width="166" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/>
+          <rect x="116" y="142" width="190" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="116" y="192" width="250" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <h4>Chat multi-agente</h4>
+        <p>A coluna de agentes fica sempre visível — reforça que existem vários especialistas, não um chatbot genérico. Cada bolha carrega fonte, confiança e versão do modelo.</p>
+      </div>
+
+      <div class="mock-card">
+        <span class="mock-num">02</span>
+        <svg viewBox="0 0 380 220" role="img" aria-label="Wireframe do dashboard: barra superior com indicadores e cartões de métricas em grade">
+          <rect x="4" y="4" width="372" height="212" rx="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <rect x="16" y="16" width="150" height="12" rx="2" fill="currentColor" opacity=".18"/>
+          <rect x="270" y="14" width="96" height="18" rx="9" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="16" y="46" width="82" height="56" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="106" y="46" width="82" height="56" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="196" y="46" width="82" height="56" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="286" y="46" width="80" height="56" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="16" y="118" width="350" height="86" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <line x1="26" y1="140" x2="356" y2="140" stroke="currentColor" stroke-width=".8" opacity=".35"/>
+          <line x1="26" y1="160" x2="356" y2="160" stroke="currentColor" stroke-width=".8" opacity=".35"/>
+          <line x1="26" y1="180" x2="356" y2="180" stroke="currentColor" stroke-width=".8" opacity=".35"/>
+        </svg>
+        <h4>Dashboard &amp; eventos</h4>
+        <p>Métricas de consumo por agente, latência média e um feed de eventos técnicos — a interface assume observabilidade como parte do produto, não um extra.</p>
+      </div>
+
+      <div class="mock-card">
+        <span class="mock-num">03</span>
+        <svg viewBox="0 0 380 220" role="img" aria-label="Wireframe da agenda e mensagens: colunas com lista de compromissos e conversas">
+          <rect x="4" y="4" width="372" height="212" rx="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <rect x="14" y="14" width="44" height="192" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="36" cy="34" r="9" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="36" cy="62" r="9" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="36" cy="90" r="9" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="70" y="14" width="120" height="192" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="80" y="26" width="100" height="10" rx="2" fill="currentColor" opacity=".18"/>
+          <rect x="80" y="48" width="100" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="80" y="80" width="100" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="80" y="112" width="100" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="202" y="14" width="164" height="192" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="212" y="26" width="144" height="10" rx="2" fill="currentColor" opacity=".18"/>
+          <rect x="212" y="48" width="144" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="212" y="86" width="144" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="212" y="124" width="144" height="30" rx="15" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <h4>Agenda &amp; mensagens</h4>
+        <p>Separadas do menu da IA numa coluna própria de "aplicativos" — a plataforma tratada como suíte corporativa completa, com a IA como um app dentro dela.</p>
+      </div>
+
+      <div class="mock-card">
+        <span class="mock-num">04</span>
+        <svg viewBox="0 0 380 220" role="img" aria-label="Wireframe de governança: lista de linhas de auditoria com status">
+          <rect x="4" y="4" width="372" height="212" rx="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <rect x="16" y="16" width="180" height="12" rx="2" fill="currentColor" opacity=".18"/>
+          <rect x="16" y="42" width="348" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="16" y="74" width="348" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="16" y="106" width="348" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="16" y="138" width="348" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="322" y="47" width="36" height="16" rx="8" fill="currentColor" opacity=".16"/>
+          <rect x="322" y="79" width="36" height="16" rx="8" fill="currentColor" opacity=".32"/>
+          <rect x="322" y="111" width="36" height="16" rx="8" fill="currentColor" opacity=".16"/>
+          <rect x="322" y="143" width="36" height="16" rx="8" fill="currentColor" opacity=".16"/>
+          <rect x="16" y="176" width="170" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+          <rect x="194" y="176" width="170" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <h4>Governança &amp; nuvem</h4>
+        <p>Log de auditoria de prompts, matriz de acesso por departamento e status dos serviços AWS — a camada que costuma faltar em demos de IA.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="mapeamento">
+    <div class="sec-num">07</div>
+    <h2>Mapeamento com os requisitos da vaga</h2>
+    <p><span class="tag core">Esperado</span> foi implementado ou simulado diretamente na interface. <span class="tag diff">Diferencial</span> foi pensado na arquitetura e documentado aqui como próximo passo.</p>
+    <table>
+      <tr><th>Requisito</th><th>O que existe no protótipo</th></tr>
+      <tr><td><span class="tag core">core</span>React.js + TypeScript</td><td>Front-end inteiro em React + TypeScript, sem framework de UI pronto, com sistema de tema por tokens.</td></tr>
+      <tr><td><span class="tag core">core</span>Python, SQL, FastAPI/DRF</td><td>Simulados na camada de agentes (Text-to-SQL, Analista de Dados) e documentados como a API que o front-end consumiria via FastAPI.</td></tr>
+      <tr><td><span class="tag core">core</span>AWS serverless (Lambda, API Gateway, ECS, SQS, DynamoDB, RDS)</td><td>Diagrama de arquitetura completo (seção 03) com o papel de cada serviço no fluxo síncrono e assíncrono.</td></tr>
+      <tr><td><span class="tag core">core</span>Testes, CI/CD, IaC, assistentes de código</td><td>CloudFormation citado como padrão de IaC; pipeline de deploy simulado no painel de Status da Nuvem.</td></tr>
+      <tr><td><span class="tag diff">diferencial</span>RAG, vector database, multi-agente</td><td>Arquitetura central do produto: orquestrador + 9 agentes especialistas, RAG com fonte citada, índice vetorial no OpenSearch.</td></tr>
+      <tr><td><span class="tag diff">diferencial</span>DDD</td><td>Cada agente é um domínio isolado (Jurídico, Financeiro, RH, CRM, Risco…), com controle de acesso por departamento na Governança.</td></tr>
+      <tr><td><span class="tag diff">diferencial</span>Data Warehouse / Lakehouse / Data Mesh</td><td>Seção de Dados (05) descreve a malha de dados por domínio e o papel do lakehouse central.</td></tr>
+      <tr><td><span class="tag diff">diferencial</span>Kubernetes</td><td>EKS desenhado como host dos modelos clássicos de ML (scoring de risco).</td></tr>
+      <tr><td><span class="tag diff">diferencial</span>Micro-frontend / Module Federation</td><td>Próximo passo documentado na seção 02: expor cada painel como micro-frontend independente.</td></tr>
+    </table>
+  </section>
+
+  <div class="foot">
+    <p>Documentação escrita por Hágata Mendes como parte da preparação para a entrevista de Engenharia de Software Full Stack — Plataforma de IA. Todo o conteúdo do protótipo (marca, dados, respostas de IA e métricas) é fictício e roda inteiramente no navegador, sem backend real.</p>
+  </div>
+
+</article>
+
+</body></html>
