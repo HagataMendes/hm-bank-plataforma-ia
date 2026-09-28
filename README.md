@@ -8,13 +8,14 @@
 <p align="center">
   <img src="https://img.shields.io/badge/React%2018-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React 18">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite">
   <img src="https://img.shields.io/badge/AWS%20Serverless-232F3E?style=flat-square&logo=amazonwebservices&logoColor=white" alt="AWS Serverless">
   <img src="https://img.shields.io/badge/RAG%20%C2%B7%20Multiagente-6E40C9?style=flat-square" alt="RAG e Multiagente">
   <img src="https://img.shields.io/badge/status-prot%C3%B3tipo%20conclu%C3%ADdo-2E9E6B?style=flat-square" alt="Status">
 </p>
 
 <p align="center">
-  <a href="https://claude.ai/artifact/N695CnMqM7ZHDrm5o1JUSM"><b>▶ Abrir o protótipo interativo</b></a> ·
+  <a href="https://hagatamendes.github.io/hm-bank-plataforma-ia/"><b>▶ Abrir o protótipo interativo</b></a> ·
   <a href="https://claude.ai/artifact/NrrHjmd19PBve1i7NWhYNX"><b>📄 Ler a documentação técnica</b></a>
 </p>
 
@@ -76,30 +77,41 @@ flowchart LR
 └─ <GovernancePanels>    Dashboard · Guardrails · Acesso · Nuvem
 ```
 
-- **React 18 + TypeScript**, sem framework de UI pronto.
+- **React 18 + TypeScript** com Vite, sem framework de UI pronto.
 - **Design tokens em CSS**, com tema claro, escuro e o tema do sistema.
 - O estado funciona como um "backend simulado": foi desenhado para ser trocado por chamadas de API (fetch/React Query) sem reescrever a interface.
 - **Próximo passo:** micro-frontends com Webpack Module Federation, com o chat, a governança e as mensagens publicados de forma independente.
 
 ## 🚀 Como executar
 
-O protótipo é um único arquivo HTML. React e Babel são carregados via CDN, e o TypeScript é transpilado no próprio navegador.
+Projeto em **React 18 + TypeScript** com **Vite**.
 
 ```bash
 git clone https://github.com/HagataMendes/hm-bank-plataforma-ia.git
 cd hm-bank-plataforma-ia
-# abra o index.html no navegador, ou sirva localmente:
-python -m http.server 8000   # e acesse http://localhost:8000
+npm install
+npm run dev        # ambiente de desenvolvimento em http://localhost:5173
+npm run typecheck  # checagem de tipos com o TypeScript
+npm run build      # build de produção em dist/
 ```
 
 Na tela de login, as credenciais de demonstração já vêm preenchidas: é só clicar em **Entrar** ou escolher um perfil.
 
+A cada push na `main`, um workflow do GitHub Actions roda o typecheck e o build e publica o protótipo no **GitHub Pages**.
+
 ## 📁 Estrutura
 
 ```
-├── index.html              protótipo completo (React + TypeScript)
-└── docs/
-    └── arquitetura.html    documentação técnica: decisões, diagrama e requisitos
+├── index.html               ponto de entrada do Vite
+├── src/
+│   ├── main.tsx             bootstrap do React
+│   ├── App.tsx              componentes, agentes, painéis e lógica simulada
+│   └── styles.css           design tokens (tema claro/escuro) e estilos
+├── docs/
+│   └── arquitetura.html     documentação técnica: decisões, diagrama e requisitos
+├── .github/workflows/
+│   └── deploy.yml           CI: typecheck, build e deploy no GitHub Pages
+├── package.json · tsconfig.json · vite.config.ts
 ```
 
 ## 👩‍💻 Autora
