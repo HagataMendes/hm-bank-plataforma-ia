@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="https://hagatamendes.github.io/hm-bank-plataforma-ia/"><b>▶ Abrir o protótipo interativo</b></a> ·
+  <a href="https://claude.ai/artifact/N695CnMqM7ZHDrm5o1JUSM"><b>▶ Abrir o protótipo interativo</b></a> ·
   <a href="https://claude.ai/artifact/NrrHjmd19PBve1i7NWhYNX"><b>📄 Ler a documentação técnica</b></a>
 </p>
 
@@ -97,8 +97,6 @@ npm run build      # build de produção em dist/
 
 Na tela de login, as credenciais de demonstração já vêm preenchidas: é só clicar em **Entrar** ou escolher um perfil.
 
-A cada push na `main`, um workflow do GitHub Actions roda o typecheck e o build e publica o protótipo no **GitHub Pages**.
-
 ## 📁 Estrutura
 
 ```
@@ -109,8 +107,6 @@ A cada push na `main`, um workflow do GitHub Actions roda o typecheck e o build 
 │   └── styles.css           design tokens (tema claro/escuro) e estilos
 ├── docs/
 │   └── arquitetura.html     documentação técnica: decisões, diagrama e requisitos
-├── .github/workflows/
-│   └── deploy.yml           CI: typecheck, build e deploy no GitHub Pages
 ├── package.json · tsconfig.json · vite.config.ts
 ```
 
